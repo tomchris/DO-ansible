@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  vars:
+    do_oauth: "{{ lookup('env', 'DO_OAUTH') }}"
+  tasks:
+  - name: Gather facts about user account
+    digital_ocean_account_facts:
+      oauth_token: "{{ do_oauth }}"
+    register: account_facts
+
+  - name: print account_facts
+    debug: var=account_facts

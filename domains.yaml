@@ -1,0 +1,16 @@
+---
+- hosts: localhost 
+  vars:
+    oauth_token: "{{ lookup('env', 'DO_OAUTH') }}"
+  tasks:
+  - name: Get DO droplet data
+    uri:
+      url: "https://api.digitalocean.com/v2/domains"
+      method: GET
+      headers:
+        Authorization: "Bearer {{ oauth_token }}"
+      return_content: yes
+    register: return_data 
+
+  - name: DEBUG return_data
+    debug: var=return_data.json
